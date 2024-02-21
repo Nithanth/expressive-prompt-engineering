@@ -12,6 +12,7 @@ from LEED import LEED
 
 # Define input data location
 data_urls = HumeAIConfigs.DATA_URLS
+local_data = ["sample_images/luka_turnt.png"]
 
 # Initialize Hume Batch Client
 hume_client = HumeBatchClient(api_key=HumeAIConfigs.API_KEY)
@@ -32,7 +33,7 @@ if HumeAIConfigs.HUME_MODEL_TYPE == "face":
     leed_model = LEED.image_face
 
 # Submit job to Hume API
-job = hume_client.submit_job(data_urls, [model_config])
+job = hume_client.submit_job([], [model_config], files=local_data)
 
 print("Running the Hume API ...", job)
 
@@ -76,7 +77,7 @@ if HumeAIConfigs.HUME_MODEL_TYPE == "prosody":
     transcription = predictions["text"]
     leed_result, _ = leed_model(emotion_phrases, transcription)
 if HumeAIConfigs.HUME_MODEL_TYPE == "face":
-    leed_result, _ = leed_model(emotion_phrases, transcription)
+    leed_result, _ = leed_model(emotion_phrases)
 
 print()
 print("LEED")

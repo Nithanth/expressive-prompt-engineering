@@ -4,9 +4,9 @@ import requests
 class OpenAIConfigs:
     API_KEY = os.environ.get("OPENAI_API_KEY")
     MODEL = "text-embedding-ada-002"
-    EXTRACT_EMBEDDINGS = False
-    PROMPT_CHATGPT = False
-    PROMPT = "How do you think they might react if you were to ask them their name?"
+    EXTRACT_EMBEDDINGS = True
+    PROMPT_CHATGPT = True
+    PROMPT = "How would you describe this NBA player as a character?"
 
     def __init__(self) -> None:
         pass
@@ -18,7 +18,7 @@ class OpenAIConfigs:
         }
 
         data = {
-            "model": "gpt-4-0314",
+            "model": "gpt-4",
             "messages": [
                 {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": prompt},
@@ -29,11 +29,12 @@ class OpenAIConfigs:
             "https://api.openai.com/v1/chat/completions", headers=headers, json=data, timeout=60
         )
         response_json = response.json()
+        print(response_json)
         return response_json["choices"][0]["message"]["content"]
 
 class HumeAIConfigs:
     API_KEY = os.environ.get("HUME_API_KEY")
-    HUME_MODEL_TYPE = "prosody"  # Options: "face", "prosody"
+    HUME_MODEL_TYPE = "face"  # Options: "face", "prosody"
 
     def __init__(self) -> None:
         pass
